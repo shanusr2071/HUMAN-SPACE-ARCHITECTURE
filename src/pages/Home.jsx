@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import gsap from 'gsap';
 import { projects } from '../data/projects.js';
+import heroImg from '../assets/hero.jpg';
+import logo from '../assets/logo.png';
 import './Home.css';
 
 // Architectural projects monograph sequence with authentic project specifications
@@ -45,23 +48,127 @@ const chainItems = [
 export default function Home() {
   // Track active compartment on touch/mobile devices where hover is not available
   const [activeTouchId, setActiveTouchId] = useState(null);
+  const [isRevealComplete, setIsRevealComplete] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+    return false;
+  });
+  const blackScreenRef = useRef(null);
+  const logoBoxRef = useRef(null);
 
   const toggleTouch = (id) => {
     setActiveTouchId((prev) => (prev === id ? null : id));
   };
 
+  useEffect(() => {
+    if (isRevealComplete) return;
+
+    const blackScreen = blackScreenRef.current;
+    const logoBox = logoBoxRef.current;
+    if (!blackScreen || !logoBox) return;
+
+    // Lock body scroll while black screen reveal is playing
+    document.body.style.overflow = 'hidden';
+
+    // Set initial states
+    gsap.set(blackScreen, {
+      yPercent: 0,
+      opacity: 1,
+      visibility: 'visible',
+    });
+    gsap.set(logoBox, {
+      opacity: 0,
+      y: 8,
+      scale: 0.98,
+    });
+
+    // Synchronized master reveal timeline
+    const tl = gsap.timeline({
+      onComplete: () => {
+        document.body.style.overflow = '';
+        setIsRevealComplete(true);
+      },
+    });
+
+    // 1. Logo fades in smoothly as the black screen appears
+    tl.to(logoBox, {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 0.8,
+      ease: 'power2.out',
+      delay: 0.15,
+    })
+    // 2. Generous cinematic hold in deep black space
+    .to({}, { duration: 0.65 })
+    // 3. Logo fades out smoothly BEFORE the black overlay disappears
+    .to(logoBox, {
+      opacity: 0,
+      y: -6,
+      duration: 0.45,
+      ease: 'power2.in',
+    })
+    // 4. Black screen smoothly reveals the homepage underneath
+    .to(
+      blackScreen,
+      {
+        yPercent: -100,
+        duration: 1.15,
+        ease: 'power3.inOut',
+      },
+      '-=0.08'
+    );
+
+    return () => {
+      document.body.style.overflow = '';
+      tl.kill();
+    };
+  }, [isRevealComplete]);
+
   return (
     <div className="home-page">
-      {/* Centered Editorial Monograph Introduction */}
-      <section className="home-intro" aria-labelledby="home-intro-heading">
-        <div className="home-intro__inner">
-          <span className="home-intro__eyebrow">Human Space Architects</span>
-          <h1 id="home-intro-heading" className="home-intro__title">
-            Architectural Works & Spatial Monograph
-          </h1>
-          <p className="home-intro__description">
-            A continuous sequence of built explorations, structural dialogues, and tactile permanence across Scandinavia, the Emirates, and Central Europe. Hover any architectural compartment to reveal technical specifications.
-          </p>
+      {/* BIG-Inspired Cinematic Black Screen Opening Reveal with Centered Logo */}
+      {!isRevealComplete && (
+        <div
+          ref={blackScreenRef}
+          className="big-reveal-screen"
+          aria-hidden="true"
+        >
+          {/* Logo is attached directly to the black animation shape */}
+          <div ref={logoBoxRef} className="big-reveal-logo-container">
+            <img
+              src={logo}
+              alt="Human Space Architects Emblem"
+              className="big-reveal-logo-img"
+            />
+            <span className="big-reveal-logo-text">Human Space Architects</span>
+          </div>
+        </div>
+      )}
+
+      {/* Cinematic Monochrome Architectural Hero Section */}
+      <section className="cinematic-hero" aria-labelledby="cinematic-hero-heading">
+        <div className="cinematic-hero__media">
+          <img
+            src={heroImg}
+            alt="Human Space Architects — Cantilevered sculptural architectural structure"
+            className="cinematic-hero__image"
+            loading="eager"
+            fetchPriority="high"
+          />
+          <div className="cinematic-hero__overlay" aria-hidden="true" />
+        </div>
+
+        <div className="cinematic-hero__content">
+          <div className="cinematic-hero__editorial">
+            <h1 id="cinematic-hero-heading" className="cinematic-hero__headline">
+              Architecture that <br className="hero-break" />moves you.
+            </h1>
+            <p className="cinematic-hero__supporting">
+              Thoughtfully designed spaces shaped by light, material, and the way we live.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -294,12 +401,12 @@ export default function Home() {
               Space, Earth & Human Experience
             </h2>
             <p className="home-colophon__text">
-              Our studio balances technical rigor with sculptural, poetic form inspired by the vanguard of Danish modernism.
+              We approach each architectural commission through tectonic honesty, tactile permanence, and an enduring dialogue between structure and landscape.
             </p>
           </div>
           <div className="home-colophon__actions">
             <Link to="/projects" className="home-colophon__button home-colophon__button--primary">
-              View All Projects Archive →
+              View All Projects →
             </Link>
             <Link to="/contact" className="home-colophon__button home-colophon__button--secondary">
               Studio Inquiries →

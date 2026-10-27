@@ -1,19 +1,52 @@
 /* src/pages/Projects.css */
 
 .projects-page {
-  padding: var(--space-lg) var(--space-md);
-  background: var(--color-off-white);
-  max-width: var(--content-max-width, 1126px);
+  padding: clamp(3rem, 5vw, 4.5rem) var(--space-md) var(--space-xl);
+  background: var(--color-secondary);
+  max-width: var(--content-max-width);
   margin: 0 auto;
 }
 
-.projects-page .category-submenu {
-  margin-bottom: var(--space-lg);
+.projects-header {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 2.5rem;
+}
+
+.projects-eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 0.75rem;
+}
+
+.projects-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.8rem, 5.2vw, 4.2rem);
+  font-weight: 350;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--color-primary);
+  margin: 0 0 1rem;
+}
+
+.projects-subtitle {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  line-height: 1.65;
+  color: var(--color-text-secondary);
+  margin: 0 auto;
+  font-weight: 350;
 }
 
 /* Ensure clean vertical document flow so expanding project images push following projects down */
 .projects-page .project-archive {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 3.5rem;
 }
+

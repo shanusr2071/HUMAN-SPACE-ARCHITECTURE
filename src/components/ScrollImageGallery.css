@@ -158,21 +158,21 @@
 
 .scroll-gallery__location {
   display: inline-block;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 0.825rem;
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #d1b199; /* warm bronze-brown */
+  color: var(--color-accent);
   margin-bottom: 0.65rem;
 }
 
 .scroll-gallery__title {
-  font-family: var(--font-sans);
-  font-size: clamp(2rem, 4.4vw, 3.8rem);
-  font-weight: 400;
+  font-family: var(--font-heading);
+  font-size: clamp(2.4rem, 4.8vw, 4.2rem);
+  font-weight: 350;
   line-height: 1.06;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.025em;
   color: #ffffff;
   margin: 0 0 0.85rem 0;
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.4);

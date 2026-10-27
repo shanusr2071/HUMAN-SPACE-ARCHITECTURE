@@ -28,7 +28,7 @@ export default function Navbar() {
                     isActive ? 'navbar__link active' : 'navbar__link'
                   }
                 >
-                  {link.label.toUpperCase()}
+                  {link.label}
                 </NavLink>
               </li>
             ))}
@@ -38,3 +38,6 @@ export default function Navbar() {
     </header>
   );
 }
+
+
+

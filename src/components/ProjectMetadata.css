@@ -2,19 +2,39 @@
 
 .project-metadata {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: var(--space-xs) var(--space-sm);
-  margin: var(--space-md) 0;
-  font-size: var(--font-size-h3);
-  color: var(--color-charcoal);
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem 2rem;
+  margin: 0;
+  padding: 1.75rem 2rem;
+  background: #FAF8F5;
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+}
+
+.project-metadata__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.project-metadata__item--wide {
+  grid-column: 1 / -1;
 }
 
 .project-metadata dt {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
   font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--color-brown);
+  color: var(--color-primary);
 }
 
 .project-metadata dd {
   margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--color-text);
+  line-height: 1.5;
 }
+
