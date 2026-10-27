@@ -1,0 +1,604 @@
+/* src/components/CinematicProjectShowcase.css */
+
+.cinematic-showcase {
+  position: relative;
+  width: 100%;
+  background-color: var(--color-off-white, #f7f5f2);
+  color: var(--color-charcoal, #2e2e2e);
+  overflow: hidden;
+  border-top: 1px solid rgba(46, 46, 46, 0.12);
+  border-bottom: 1px solid rgba(46, 46, 46, 0.12);
+}
+
+/* ==========================================================================
+   Desktop Pinned Stage Layout (>= 1024px)
+   ========================================================================== */
+@media (min-width: 1024px) {
+  .cinematic-showcase__stage {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.5rem 3.5rem;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: var(--color-off-white, #f7f5f2);
+  }
+
+  /* Fixed height viewport holding stacked scenes */
+  .cinematic-showcase__viewport {
+    position: relative;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* Each scene is positioned in the viewport */
+  .cinematic-scene {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-off-white, #f7f5f2);
+    box-sizing: border-box;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  /* Active scene receives pointer events */
+  .cinematic-scene.is-active,
+  .cinematic-scene:first-child {
+    pointer-events: auto;
+    visibility: visible;
+  }
+
+  .cinematic-scene__inner {
+    display: grid;
+    grid-template-columns: 1.05fr 1.35fr;
+    gap: 4.5rem;
+    width: 100%;
+    max-width: 1440px;
+    height: 100%;
+    align-items: center;
+  }
+
+  .cinematic-scene__content {
+    overflow: hidden;
+    padding: 1rem 0;
+  }
+
+  .cinematic-scene__content-inner {
+    will-change: transform, opacity;
+  }
+
+  .cinematic-scene__media {
+    overflow: hidden;
+    padding: 1rem 0;
+  }
+
+  .cinematic-scene__media-frame {
+    height: 68vh;
+    max-height: 640px;
+    will-change: transform, opacity;
+  }
+}
+
+/* ==========================================================================
+   Stage Header, Project Navigation & Counter
+   ========================================================================== */
+.cinematic-showcase__header {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(46, 46, 46, 0.1);
+}
+
+.cinematic-showcase__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+
+.cinematic-showcase__live-dot {
+  width: 7px;
+  height: 7px;
+  background-color: var(--color-brown, #8c5e3c);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(140, 94, 60, 0.2);
+}
+
+.cinematic-showcase__label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-brown, #8c5e3c);
+}
+
+/* Functional Project Selection Navigation */
+.cinematic-showcase__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.cinematic-showcase__nav::-webkit-scrollbar {
+  display: none;
+}
+
+.cinematic-showcase__nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: rgba(46, 46, 46, 0.65);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.cinematic-showcase__nav-btn:hover {
+  color: var(--color-brown, #8c5e3c);
+  background: rgba(140, 94, 60, 0.08);
+}
+
+.cinematic-showcase__nav-btn.is-active {
+  color: #ffffff;
+  background: var(--color-brown, #8c5e3c);
+  border-color: var(--color-brown, #8c5e3c);
+  font-weight: 600;
+}
+
+.cinematic-showcase__nav-num {
+  font-feature-settings: "tnum";
+}
+
+.cinematic-showcase__nav-name {
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cinematic-showcase__counter {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--color-charcoal, #2e2e2e);
+  flex-shrink: 0;
+}
+
+.cinematic-showcase__current {
+  color: var(--color-brown, #8c5e3c);
+  font-size: 1.05rem;
+}
+
+.cinematic-showcase__divider {
+  color: rgba(46, 46, 46, 0.3);
+}
+
+/* ==========================================================================
+   Editorial Scene Details Column (Information Column)
+   ========================================================================== */
+.cinematic-scene__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 580px;
+}
+
+.cinematic-scene__meta-top {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.75rem;
+}
+
+.cinematic-scene__index {
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-brown, #8c5e3c);
+  font-feature-settings: "tnum";
+}
+
+.cinematic-scene__sep {
+  color: rgba(46, 46, 46, 0.25);
+  font-size: 0.85rem;
+}
+
+.cinematic-scene__category {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #666666;
+}
+
+.cinematic-scene__title {
+  font-family: var(--font-sans);
+  font-size: clamp(2rem, 3.2vw, 3.2rem);
+  font-weight: 350;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  color: var(--color-charcoal, #2e2e2e);
+  margin: 0 0 0.5rem 0;
+}
+
+.cinematic-scene__location-year {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: #777777;
+  margin-bottom: 1.25rem;
+}
+
+.cinematic-scene__dot {
+  color: var(--color-brown, #8c5e3c);
+  font-size: 0.8rem;
+}
+
+.cinematic-scene__quote {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--color-brown, #8c5e3c);
+  margin: 0 0 1.25rem 0;
+  padding-left: 1.1rem;
+  border-left: 2px solid var(--color-brown, #8c5e3c);
+}
+
+.cinematic-scene__description {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: #4a4a4a;
+  margin: 0 0 1.5rem 0;
+}
+
+/* Architectural Specifications */
+.cinematic-scene__specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem 1.5rem;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(46, 46, 46, 0.1);
+  border-bottom: 1px solid rgba(46, 46, 46, 0.1);
+  margin-bottom: 1.75rem;
+}
+
+.cinematic-scene__spec-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.cinematic-scene__spec-item--full {
+  grid-column: span 2;
+}
+
+.cinematic-scene__spec-label {
+  font-family: var(--font-sans);
+  font-size: 0.675rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #888888;
+}
+
+.cinematic-scene__spec-val {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-charcoal, #2e2e2e);
+}
+
+/* Call to Action */
+.cinematic-scene__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.825rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-charcoal, #2e2e2e);
+  text-decoration: none;
+  padding-bottom: 0.35rem;
+  border-bottom: 2px solid var(--color-brown, #8c5e3c);
+  transition: all 0.25s ease;
+  width: fit-content;
+}
+
+.cinematic-scene__cta-arrow {
+  color: var(--color-brown, #8c5e3c);
+  transition: transform 0.25s ease;
+  font-size: 1.1rem;
+}
+
+.cinematic-scene__cta:hover {
+  color: var(--color-brown, #8c5e3c);
+}
+
+.cinematic-scene__cta:hover .cinematic-scene__cta-arrow {
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   Architectural Photography Column (Image Column)
+   ========================================================================== */
+.cinematic-scene__media {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cinematic-scene__media-frame {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: #1f1f22;
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 2px;
+}
+
+.cinematic-scene__media-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.cinematic-scene__image {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1),
+    filter 0.4s ease;
+}
+
+.cinematic-scene__media-link:hover .cinematic-scene__image {
+  transform: scale(1.025);
+  filter: brightness(1.03);
+}
+
+.cinematic-scene__media-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0.1) 0%,
+      transparent 20%,
+      transparent 80%,
+      rgba(0, 0, 0, 0.35) 100%);
+  pointer-events: none;
+}
+
+/* Hover Badge indicator */
+.cinematic-scene__hover-badge {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  background: rgba(22, 22, 26, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.cinematic-scene__media-link:hover .cinematic-scene__hover-badge {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cinematic-scene__hover-arrow {
+  color: var(--color-brown, #8c5e3c);
+  transition: transform 0.25s ease;
+}
+
+.cinematic-scene__media-link:hover .cinematic-scene__hover-arrow {
+  transform: translateX(3px);
+}
+
+.cinematic-scene__location-pill {
+  position: absolute;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  background: rgba(22, 22, 26, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0.4rem 0.9rem;
+  color: #f7f5f2;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border-left: 2px solid var(--color-brown, #8c5e3c);
+}
+
+/* ==========================================================================
+   Stage Footer & Scroll Guide
+   ========================================================================== */
+.cinematic-showcase__footer {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-top: 1rem;
+}
+
+.cinematic-showcase__scroll-guide {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #777777;
+  margin-bottom: 0.75rem;
+}
+
+.cinematic-showcase__scroll-arrow {
+  color: var(--color-brown, #8c5e3c);
+  font-size: 0.95rem;
+}
+
+.cinematic-showcase__progress-bar {
+  width: 100%;
+  height: 2px;
+  background-color: rgba(46, 46, 46, 0.12);
+  overflow: hidden;
+}
+
+.cinematic-showcase__progress-fill {
+  height: 100%;
+  background-color: var(--color-brown, #8c5e3c);
+  transition: width 0.35s ease-out;
+}
+
+/* ==========================================================================
+   Mobile & Tablet Responsive Styling (< 1024px)
+   ========================================================================== */
+@media (max-width: 1023px) {
+  .cinematic-showcase {
+    height: auto;
+    overflow: visible;
+  }
+
+  .cinematic-showcase__stage {
+    padding: 3.5rem 1.25rem;
+  }
+
+  .cinematic-showcase__nav {
+    display: none;
+  }
+
+  .cinematic-showcase__viewport {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    height: auto;
+    overflow: visible;
+    margin-top: 2rem;
+  }
+
+  .cinematic-scene {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    height: auto;
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid rgba(46, 46, 46, 0.12);
+  }
+
+  .cinematic-scene:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .cinematic-scene__content-inner,
+  .cinematic-scene__media-frame {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  .cinematic-scene__inner {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 2rem;
+  }
+
+  .cinematic-scene__media-frame {
+    height: 380px;
+  }
+
+  .cinematic-showcase__footer {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Reduced Motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+
+  .cinematic-scene,
+  .cinematic-scene__content-inner,
+  .cinematic-scene__media-frame {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .cinematic-scene__cta,
+  .cinematic-scene__cta-arrow,
+  .cinematic-showcase__progress-fill,
+  .cinematic-showcase__nav-btn {
+    transition: none !important;
+  }
+}

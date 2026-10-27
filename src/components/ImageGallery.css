@@ -1,0 +1,14 @@
+/* src/components/ImageGallery.css */
+
+.image-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding: 2.5rem 0;
+  width: 100%;
+}
+
+.image-gallery figure {
+  margin: 0;
+  width: 100%;
+}

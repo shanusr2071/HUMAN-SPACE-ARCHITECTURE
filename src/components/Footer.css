@@ -1,0 +1,79 @@
+/* src/components/Footer.css */
+
+.footer {
+  background: var(--color-charcoal, #2e2e2e);
+  color: var(--color-off-white, #f7f5f2);
+  padding: 4rem var(--space-md, 2rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer__grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 3rem;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.footer__brand-block {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.footer__logo-img {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+  background: #ffffff;
+  padding: 3px;
+  border-radius: 2px;
+}
+
+.footer__brand-block h3 {
+  margin: 0 0 0.35rem 0;
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+}
+
+.footer__brand-block p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: rgba(247, 245, 242, 0.6);
+}
+
+.footer__contact-block h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #d1b199;
+}
+
+.footer__contact-block p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(247, 245, 242, 0.8);
+}
+
+.footer a {
+  color: #d1b199;
+  text-decoration: underline;
+  transition: opacity 0.2s ease;
+}
+
+.footer a:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 680px) {
+  .footer__grid {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}

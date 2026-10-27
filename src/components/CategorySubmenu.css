@@ -1,0 +1,23 @@
+.category-submenu ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+}
+
+.category-submenu .category-btn {
+  background: none;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: .875rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.category-submenu .category-btn:hover,
+.category-submenu .category-btn:focus {
+  text-decoration: underline;
+}

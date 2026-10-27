@@ -1,0 +1,981 @@
+/* src/pages/Home.css */
+
+.home-page {
+  width: 100%;
+  overflow-x: clip;
+  background-color: var(--color-off-white, #f7f5f2);
+  color: var(--color-charcoal, #2e2e2e);
+  min-height: 100vh;
+}
+
+/* ==========================================================================
+   Editorial Monograph Introduction (Centered)
+   ========================================================================== */
+.home-intro {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: clamp(4rem, 6.5vw, 6rem) clamp(1.5rem, 4vw, 2.5rem) clamp(2.5rem, 4vw, 3.5rem);
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.home-intro__inner {
+  max-width: 820px;
+  margin: 0 auto;
+  border-bottom: 1px solid rgba(46, 46, 46, 0.12);
+  padding-bottom: clamp(2rem, 3.5vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-intro__eyebrow {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-brown, #8c5e3c);
+  margin-bottom: 1.25rem;
+}
+
+.home-intro__title {
+  font-family: var(--font-sans);
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  font-weight: 350;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  color: var(--color-charcoal, #2e2e2e);
+  margin: 0 0 1.25rem 0;
+  max-width: 760px;
+}
+
+.home-intro__description {
+  font-family: var(--font-sans);
+  font-size: clamp(1.05rem, 1.35vw, 1.2rem);
+  line-height: 1.65;
+  color: rgba(46, 46, 46, 0.75);
+  margin: 0 auto;
+  max-width: 640px;
+}
+
+/* ==========================================================================
+   Vertical Column with Dimensionally-Stable Three-Panel Architectural Compartments
+   ========================================================================== */
+.image-chain-section {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 3.5vw, 3rem);
+  box-sizing: border-box;
+}
+
+/* Central spine container */
+.chain-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/*
+ * Each card is an independent architectural compartment centered on the main axis.
+ * Default size: 55% of content width (maintains the clean centered monograph column).
+ * Active/Hover size: 95% of content width (unfolds the three-panel architectural reveal).
+ */
+.chain-card {
+  width: 55%;
+  margin: 0 auto clamp(4rem, 6.5vw, 5.5rem) auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: width 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.chain-card:last-child {
+  margin-bottom: clamp(3.5rem, 5vw, 4.5rem);
+}
+
+/* Compartment wrapper */
+.compartment {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.5rem;
+  box-sizing: border-box;
+}
+
+/*
+ * Stage containing the architectural image column and the three slide-in panels:
+ * 1. Image column
+ * 2. Editorial overview & concept panel
+ * 3. Technical specifications panel
+ * 4. Location map panel
+ * Invariant height prevents upward/downward scroll jumps during hover!
+ */
+.compartment-stage {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  height: clamp(390px, 42vw, 490px);
+  gap: 0;
+  transition: gap 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Primary Column: Architectural Photograph */
+.compartment-image-col {
+  flex: 1 1 100%;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  transition: flex 500ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    width 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.chain-image-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  outline-offset: 6px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.chain-image-link:focus-visible {
+  outline: 2px solid var(--color-brown, #8c5e3c);
+  outline-offset: 4px;
+}
+
+.chain-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #eae6df;
+  border-radius: 1px;
+}
+
+.chain-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.chain-image-link:hover .chain-image {
+  transform: scale(1.012);
+}
+
+/* Touchscreen toggle button (hidden on desktop; visible on mobile/tablet) */
+.compartment-touch-toggle {
+  display: none;
+}
+
+/* ==========================================================================
+   Horizontal-Reveal Architectural Details Panels
+   ========================================================================== */
+.compartment-panel {
+  flex: 0 0 0;
+  width: 0;
+  height: 100%;
+  max-height: 100%;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(140, 94, 60, 0.16);
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+/* Panel 1: Editorial Overview, Title & Concept */
+.compartment-panel--primary {
+  border-left: 2px solid var(--color-brown, #8c5e3c);
+  transform: translateX(20px);
+  transition: flex 480ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    width 480ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 420ms ease,
+    transform 480ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Panel 2: Technical Specifications & Monograph Case Study (stagger 1: 80ms) */
+.compartment-panel--secondary {
+  border-left: 1px solid rgba(140, 94, 60, 0.25);
+  transform: translateX(35px);
+  transition: flex 520ms cubic-bezier(0.2, 0.8, 0.2, 1) 80ms,
+    width 520ms cubic-bezier(0.2, 0.8, 0.2, 1) 80ms,
+    opacity 460ms ease 80ms,
+    transform 520ms cubic-bezier(0.2, 0.8, 0.2, 1) 80ms;
+}
+
+/* Panel 3: Project Location Map (stagger 2: 160ms) */
+.compartment-panel--map {
+  border-left: 1px solid rgba(140, 94, 60, 0.25);
+  transform: translateX(45px);
+  transition: flex 540ms cubic-bezier(0.2, 0.8, 0.2, 1) 160ms,
+    width 540ms cubic-bezier(0.2, 0.8, 0.2, 1) 160ms,
+    opacity 480ms ease 160ms,
+    transform 540ms cubic-bezier(0.2, 0.8, 0.2, 1) 160ms;
+}
+
+.compartment-panel__inner {
+  padding: clamp(1rem, 1.4vw, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  box-sizing: border-box;
+  opacity: 0;
+  transform: translateX(12px);
+  overflow-y: auto;
+  scrollbar-width: none;
+  transition: opacity 250ms ease, transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.compartment-panel__inner::-webkit-scrollbar {
+  display: none;
+}
+
+/* Map specific inner layout */
+.compartment-panel__inner--map {
+  gap: 0.65rem;
+}
+
+/* ==========================================================================
+   Desktop Hover & Focus-within Reveal State
+   ========================================================================== */
+@media (hover: hover) and (pointer: fine) {
+
+  .chain-card:hover,
+  .chain-card:focus-within {
+    width: 95%;
+  }
+
+  .chain-card:hover .compartment-stage,
+  .chain-card:focus-within .compartment-stage {
+    gap: clamp(0.65rem, 1.1vw, 1.25rem);
+  }
+
+  .chain-card:hover .compartment-image-col,
+  .chain-card:focus-within .compartment-image-col {
+    flex: 0 0 38%;
+    width: 38%;
+  }
+
+  /* Panel 1 reveals immediately on hover */
+  .chain-card:hover .compartment-panel--primary,
+  .chain-card:focus-within .compartment-panel--primary {
+    flex: 0 0 calc(20% - clamp(0.35rem, 0.6vw, 0.65rem));
+    width: calc(20% - clamp(0.35rem, 0.6vw, 0.65rem));
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+
+  .chain-card:hover .compartment-panel--primary .compartment-panel__inner,
+  .chain-card:focus-within .compartment-panel--primary .compartment-panel__inner {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 300ms ease 100ms, transform 450ms cubic-bezier(0.2, 0.8, 0.2, 1) 100ms;
+  }
+
+  /* Panel 2 follows with first subtle staggered delay (80ms) */
+  .chain-card:hover .compartment-panel--secondary,
+  .chain-card:focus-within .compartment-panel--secondary {
+    flex: 0 0 calc(20% - clamp(0.35rem, 0.6vw, 0.65rem));
+    width: calc(20% - clamp(0.35rem, 0.6vw, 0.65rem));
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+
+  .chain-card:hover .compartment-panel--secondary .compartment-panel__inner,
+  .chain-card:focus-within .compartment-panel--secondary .compartment-panel__inner {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 300ms ease 180ms, transform 450ms cubic-bezier(0.2, 0.8, 0.2, 1) 180ms;
+  }
+
+  /* Panel 3 (Location Map) follows with second subtle staggered delay (160ms) */
+  .chain-card:hover .compartment-panel--map,
+  .chain-card:focus-within .compartment-panel--map {
+    flex: 0 0 calc(22% - clamp(0.35rem, 0.6vw, 0.65rem));
+    width: calc(22% - clamp(0.35rem, 0.6vw, 0.65rem));
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+
+  .chain-card:hover .compartment-panel--map .compartment-panel__inner,
+  .chain-card:focus-within .compartment-panel--map .compartment-panel__inner {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 300ms ease 240ms, transform 450ms cubic-bezier(0.2, 0.8, 0.2, 1) 240ms;
+  }
+}
+
+/* Touchscreen active state on laptop/hybrid touchscreens */
+.chain-card.is-touch-active {
+  width: 95%;
+}
+
+.chain-card.is-touch-active .compartment-stage {
+  gap: clamp(0.65rem, 1.1vw, 1.25rem);
+}
+
+.chain-card.is-touch-active .compartment-image-col {
+  flex: 0 0 38%;
+  width: 38%;
+}
+
+.chain-card.is-touch-active .compartment-panel--primary {
+  flex: 0 0 calc(20% - clamp(0.35rem, 0.6vw, 0.65rem));
+  width: calc(20% - clamp(0.35rem, 0.6vw, 0.65rem));
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+
+.chain-card.is-touch-active .compartment-panel--primary .compartment-panel__inner {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms ease 100ms, transform 450ms cubic-bezier(0.2, 0.8, 0.2, 1) 100ms;
+}
+
+.chain-card.is-touch-active .compartment-panel--secondary {
+  flex: 0 0 calc(20% - clamp(0.35rem, 0.6vw, 0.65rem));
+  width: calc(20% - clamp(0.35rem, 0.6vw, 0.65rem));
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+
+.chain-card.is-touch-active .compartment-panel--secondary .compartment-panel__inner {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms ease 180ms, transform 450ms cubic-bezier(0.2, 0.8, 0.2, 1) 180ms;
+}
+
+.chain-card.is-touch-active .compartment-panel--map {
+  flex: 0 0 calc(22% - clamp(0.35rem, 0.6vw, 0.65rem));
+  width: calc(22% - clamp(0.35rem, 0.6vw, 0.65rem));
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+
+.chain-card.is-touch-active .compartment-panel--map .compartment-panel__inner {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms ease 240ms, transform 450ms cubic-bezier(0.2, 0.8, 0.2, 1) 240ms;
+}
+
+/* ==========================================================================
+   Panel Typography & Metadata Formatting
+   ========================================================================== */
+.compartment-panel__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-brown, #8c5e3c);
+  margin-bottom: 0.45rem;
+}
+
+.compartment-panel__section-tag {
+  letter-spacing: 0.18em;
+  color: var(--color-brown, #8c5e3c);
+}
+
+.compartment-panel__dot {
+  opacity: 0.45;
+  font-size: 0.65rem;
+}
+
+.compartment-panel__title {
+  font-family: var(--font-sans);
+  font-size: clamp(1.15rem, 1.45vw, 1.45rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.22;
+  margin: 0 0 0.75rem 0;
+}
+
+.compartment-title-link {
+  text-decoration: none;
+  color: var(--color-charcoal, #2e2e2e);
+  transition: color 0.2s ease;
+}
+
+.compartment-title-link:hover {
+  color: var(--color-brown, #8c5e3c);
+}
+
+/* Structured Specifications List */
+.compartment-specs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+}
+
+.compartment-spec-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+  border-bottom: 1px solid rgba(46, 46, 46, 0.08);
+  padding-bottom: 0.45rem;
+}
+
+.compartment-spec-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.compartment-spec-label {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-brown, #8c5e3c);
+  margin: 0;
+}
+
+.compartment-spec-value {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: rgba(46, 46, 46, 0.85);
+  margin: 0;
+}
+
+.compartment-panel__footer {
+  margin-top: 0.75rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid rgba(140, 94, 60, 0.2);
+}
+
+.compartment-panel__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-brown, #8c5e3c);
+  text-decoration: none;
+  transition: gap 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+}
+
+.compartment-panel__cta:hover {
+  gap: 0.75rem;
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   Map Panel Styling
+   ========================================================================== */
+.compartment-map__container {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  min-height: 180px;
+  border-radius: 2px;
+  overflow: hidden;
+  background-color: #eae6df;
+  border: 1px solid rgba(140, 94, 60, 0.2);
+  box-sizing: border-box;
+}
+
+.compartment-map__frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  filter: saturate(0.85) contrast(1.05);
+  transition: filter 0.3s ease;
+}
+
+.compartment-map__frame:hover {
+  filter: saturate(1) contrast(1);
+}
+
+.compartment-map__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 1.25rem;
+  text-align: center;
+  color: rgba(46, 46, 46, 0.65);
+}
+
+.compartment-map__placeholder-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-brown, #8c5e3c);
+}
+
+.compartment-map__placeholder-text {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.compartment-map__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.compartment-map__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-brown, #8c5e3c);
+  text-decoration: none;
+  transition: gap 0.25s ease, opacity 0.2s ease;
+}
+
+.compartment-map__link:hover {
+  gap: 0.65rem;
+  opacity: 0.85;
+}
+
+.compartment-map__link-disabled {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(46, 46, 46, 0.45);
+}
+
+/* Baseline Minimalist Caption (Dimensionally stable) */
+.chain-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding-top: 0.5rem;
+  width: 100%;
+  min-height: 4.5rem;
+  box-sizing: border-box;
+}
+
+.chain-caption__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-brown, #8c5e3c);
+}
+
+.chain-caption__dot {
+  opacity: 0.45;
+  font-size: 0.65rem;
+}
+
+.chain-caption__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.chain-caption__title {
+  font-family: var(--font-sans);
+  font-size: clamp(1.4rem, 2.2vw, 1.95rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.chain-title-link {
+  text-decoration: none;
+  color: var(--color-charcoal, #2e2e2e);
+  transition: color 0.2s ease;
+}
+
+.chain-title-link:hover {
+  color: var(--color-brown, #8c5e3c);
+}
+
+.chain-caption__location {
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+  color: rgba(46, 46, 46, 0.65);
+  margin: 0;
+}
+
+/* ==========================================================================
+   Editorial Colophon & Studio Closing Section
+   ========================================================================= */
+.home-colophon {
+  width: 100%;
+  border-top: 1px solid rgba(46, 46, 46, 0.12);
+  background-color: var(--color-off-white, #f7f5f2);
+  padding: clamp(4rem, 6vw, 5.5rem) clamp(1.5rem, 4vw, 2.5rem);
+  box-sizing: border-box;
+}
+
+.home-colophon__inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.home-colophon__content {
+  max-width: 580px;
+}
+
+.home-colophon__eyebrow {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-brown, #8c5e3c);
+  margin-bottom: 0.75rem;
+}
+
+.home-colophon__title {
+  font-family: var(--font-sans);
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  font-weight: 350;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--color-charcoal, #2e2e2e);
+  margin: 0 0 1rem 0;
+}
+
+.home-colophon__text {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: rgba(46, 46, 46, 0.75);
+  margin: 0;
+}
+
+.home-colophon__actions {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.home-colophon__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.95rem 1.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
+}
+
+.home-colophon__button--primary {
+  background-color: var(--color-brown, #8c5e3c);
+  color: #ffffff;
+  border: 1px solid var(--color-brown, #8c5e3c);
+}
+
+.home-colophon__button--primary:hover {
+  background-color: #724b2f;
+  border-color: #724b2f;
+}
+
+.home-colophon__button--secondary {
+  background-color: transparent;
+  color: var(--color-charcoal, #2e2e2e);
+  border: 1px solid rgba(46, 46, 46, 0.35);
+}
+
+.home-colophon__button--secondary:hover {
+  border-color: var(--color-charcoal, #2e2e2e);
+  background-color: rgba(46, 46, 46, 0.04);
+}
+
+/* ==========================================================================
+   Responsive Adaptations (Tablet & Mobile)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .chain-card {
+    width: 70%;
+  }
+
+  .compartment-stage {
+    height: clamp(360px, 40vw, 460px);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .chain-card:hover,
+    .chain-card:focus-within {
+      width: 96%;
+    }
+
+    .chain-card:hover .compartment-image-col,
+    .chain-card:focus-within .compartment-image-col {
+      flex: 0 0 35%;
+      width: 35%;
+    }
+
+    .chain-card:hover .compartment-panel--primary,
+    .chain-card:focus-within .compartment-panel--primary {
+      flex: 0 0 calc(21% - 0.5rem);
+      width: calc(21% - 0.5rem);
+    }
+
+    .chain-card:hover .compartment-panel--secondary,
+    .chain-card:focus-within .compartment-panel--secondary {
+      flex: 0 0 calc(21% - 0.5rem);
+      width: calc(21% - 0.5rem);
+    }
+
+    .chain-card:hover .compartment-panel--map,
+    .chain-card:focus-within .compartment-panel--map {
+      flex: 0 0 calc(23% - 0.5rem);
+      width: calc(23% - 0.5rem);
+    }
+  }
+
+  .chain-card.is-touch-active {
+    width: 96%;
+  }
+
+  .chain-card.is-touch-active .compartment-image-col {
+    flex: 0 0 35%;
+    width: 35%;
+  }
+
+  .chain-card.is-touch-active .compartment-panel--primary {
+    flex: 0 0 calc(21% - 0.5rem);
+    width: calc(21% - 0.5rem);
+  }
+
+  .chain-card.is-touch-active .compartment-panel--secondary {
+    flex: 0 0 calc(21% - 0.5rem);
+    width: calc(21% - 0.5rem);
+  }
+
+  .chain-card.is-touch-active .compartment-panel--map {
+    flex: 0 0 calc(23% - 0.5rem);
+    width: calc(23% - 0.5rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .home-intro {
+    padding: 3.5rem 1.25rem 2.25rem;
+  }
+
+  .image-chain-section {
+    padding: 0 1.25rem;
+  }
+
+  /* On mobile touchscreens, keep images at 100% container width with vertical unfolding */
+  .chain-card {
+    width: 100% !important;
+    margin-bottom: 3.5rem;
+  }
+
+  .chain-card:last-child {
+    margin-bottom: 3rem;
+  }
+
+  .compartment-stage {
+    flex-direction: column;
+    gap: 0;
+    height: auto;
+  }
+
+  .compartment-image-col {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+    height: auto;
+  }
+
+  .chain-image-wrapper {
+    height: auto;
+    aspect-ratio: 16 / 10;
+  }
+
+  .chain-caption {
+    min-height: auto;
+  }
+
+  /* Reveal accessible touch button on mobile */
+  .compartment-touch-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: rgba(140, 94, 60, 0.08);
+    border: 1px solid rgba(140, 94, 60, 0.25);
+    color: var(--color-brown, #8c5e3c);
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    box-sizing: border-box;
+  }
+
+  .compartment-touch-toggle:focus-visible {
+    outline: 2px solid var(--color-brown, #8c5e3c);
+    outline-offset: 2px;
+  }
+
+  .touch-toggle-icon {
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  /* Mobile vertical compartment stacking */
+  .compartment-panel {
+    width: 100% !important;
+    flex: 1 1 auto !important;
+    height: auto;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(10px);
+    border-left: 1px solid rgba(140, 94, 60, 0.18);
+    border-top: 2px solid var(--color-brown, #8c5e3c);
+    margin-top: 0;
+    transition: max-height 450ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity 350ms ease,
+      transform 400ms ease,
+      margin-top 350ms ease;
+  }
+
+  .compartment-panel--secondary,
+  .compartment-panel--map {
+    border-top: 1px solid rgba(140, 94, 60, 0.25);
+  }
+
+  .chain-card.is-touch-active .compartment-panel--primary {
+    max-height: 600px;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+    margin-top: 1rem;
+  }
+
+  .chain-card.is-touch-active .compartment-panel--secondary {
+    max-height: 600px;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+    margin-top: 0.75rem;
+    transition-delay: 80ms;
+  }
+
+  .chain-card.is-touch-active .compartment-panel--map {
+    max-height: 400px;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+    margin-top: 0.75rem;
+    transition-delay: 160ms;
+  }
+
+  .compartment-map__container {
+    height: 180px;
+  }
+
+  .chain-card.is-touch-active .compartment-panel__inner {
+    opacity: 1;
+    transform: translateY(0);
+    padding: 1.25rem 1rem;
+  }
+
+  .home-colophon {
+    padding: 3.5rem 1.25rem;
+  }
+
+  .home-colophon__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+
+  .home-colophon__actions {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .home-colophon__button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+
+  .chain-card,
+  .chain-image,
+  .compartment-stage,
+  .compartment-image-col,
+  .compartment-panel,
+  .compartment-panel--primary,
+  .compartment-panel--secondary,
+  .compartment-panel--map,
+  .compartment-panel__inner,
+  .home-colophon__button {
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .chain-image-link:hover .chain-image {
+    transform: none !important;
+  }
+}

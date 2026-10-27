@@ -1,0 +1,24 @@
+/* src/pages/Contact.css */
+
+.contact-page {
+  padding: var(--space-lg) var(--space-md);
+  background: var(--color-off-white);
+}
+
+.contact-page .details {
+  margin-bottom: var(--space-lg);
+  line-height: 1.6;
+}
+
+.contact-page .cta {
+  text-align: center;
+}
+
+.contact-page .whatsapp-btn {
+  display: inline-block;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-brown);
+  color: var(--color-off-white);
+  text-decoration: none;
+  font-weight: 600;
+}

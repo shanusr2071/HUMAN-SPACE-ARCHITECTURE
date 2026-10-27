@@ -1,0 +1,14 @@
+/* src/components/SiteHeader.css */
+
+.site-header {
+  background: var(--color-off-white);
+  padding: var(--space-sm) var(--space-md);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--color-brown);
+}
+
+.site-logo {
+  height: 48px;
+  width: auto;
+}

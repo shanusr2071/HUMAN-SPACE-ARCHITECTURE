@@ -1,0 +1,19 @@
+/* src/pages/Projects.css */
+
+.projects-page {
+  padding: var(--space-lg) var(--space-md);
+  background: var(--color-off-white);
+  max-width: var(--content-max-width, 1126px);
+  margin: 0 auto;
+}
+
+.projects-page .category-submenu {
+  margin-bottom: var(--space-lg);
+}
+
+/* Ensure clean vertical document flow so expanding project images push following projects down */
+.projects-page .project-archive {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}

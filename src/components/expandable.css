@@ -1,0 +1,479 @@
+/* src/components/expandable.css */
+
+.expandable-project-card {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    /* Normal document flow: no fixed or absolute overlay */
+}
+
+/* Minimalist Compact Header: luxury Danish modernist styling */
+.expandable-compact-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 0 0 1.25rem 0;
+    font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
+}
+
+.expandable-compact-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 0.85rem;
+    min-width: 0;
+}
+
+.expandable-compact-index {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-brown, #8c5e3c);
+    letter-spacing: 0.12em;
+    font-feature-settings: "tnum";
+}
+
+.expandable-compact-sep {
+    color: rgba(46, 46, 46, 0.25);
+    font-size: 0.85rem;
+}
+
+.expandable-compact-title {
+    font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+    font-weight: 350;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    color: var(--color-charcoal, #2e2e2e);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.expandable-compact-location {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(46, 46, 46, 0.55);
+    flex-shrink: 0;
+}
+
+.expandable-compact-year {
+    margin-left: 0.35rem;
+    color: rgba(46, 46, 46, 0.4);
+}
+
+/* Image Canvas Frame */
+.expandable-image-frame {
+    position: relative;
+    width: 100%;
+    /* Default compact height: 350px on desktop (clean architectural letterbox proportions) */
+    height: 350px;
+    overflow: hidden;
+    background-color: #edeae4;
+    cursor: zoom-in;
+    /* Refined 700ms quintic deceleration curve for smooth, weighted transition */
+    transition: height 700ms cubic-bezier(0.19, 1, 0.22, 1),
+        box-shadow 700ms cubic-bezier(0.19, 1, 0.22, 1);
+    border-radius: 1px;
+    box-shadow: 0 4px 20px -6px rgba(46, 46, 46, 0.08);
+    user-select: none;
+    -webkit-user-select: none;
+    will-change: height, box-shadow;
+}
+
+/* Expanded state in normal document flow */
+.expandable-image-frame.is-expanded {
+    /* Expands to 82vh (within 75–85vh requirement) */
+    height: 82vh;
+    cursor: zoom-out;
+    box-shadow: 0 24px 60px -15px rgba(46, 46, 46, 0.16);
+}
+
+/* Architectural photograph */
+.expandable-image-element {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 700ms cubic-bezier(0.19, 1, 0.22, 1),
+        filter 400ms ease;
+    will-change: transform;
+}
+
+.expandable-image-frame:hover .expandable-image-element {
+    filter: brightness(1.015);
+}
+
+.expandable-image-frame.is-expanded .expandable-image-element {
+    transform: scale(1.005);
+}
+
+/* Separate Full-Screen Control Button (Clearly Visible) */
+.expandable-fullscreen-btn {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.95rem;
+    font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #ffffff;
+    background: rgba(18, 18, 20, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 9999px;
+    cursor: pointer;
+    z-index: 10;
+    transition: background-color 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+    user-select: none;
+}
+
+.expandable-fullscreen-btn:hover {
+    background: var(--color-brown, #8c5e3c);
+    border-color: var(--color-brown, #8c5e3c);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+.expandable-fullscreen-btn:focus-visible {
+    outline: 2px solid var(--color-brown, #8c5e3c);
+    outline-offset: 3px;
+}
+
+.expandable-fullscreen-icon {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+/* Minimalist architectural expand-in-place badge */
+.expandable-badge {
+    position: absolute;
+    bottom: 1.25rem;
+    right: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.95rem;
+    font-family: var(--font-sans, 'Inter', system-ui, sans-serif);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #ffffff;
+    background: rgba(18, 18, 20, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 9999px;
+    pointer-events: none;
+    transition: background-color 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+    z-index: 2;
+}
+
+.expandable-image-frame:hover .expandable-badge {
+    background: var(--color-brown, #8c5e3c);
+    border-color: var(--color-brown, #8c5e3c);
+    transform: translateY(-1px);
+}
+
+.expandable-image-frame.is-expanded .expandable-badge {
+    background: rgba(18, 18, 20, 0.85);
+    border-color: var(--color-brown, #8c5e3c);
+}
+
+.expandable-badge-icon {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    flex-shrink: 0;
+    transition: transform 700ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Accessible focus styling for keyboard navigation */
+.expandable-image-frame:focus-visible {
+    outline: 2px solid var(--color-brown, #8c5e3c);
+    outline-offset: 4px;
+}
+
+/* ==========================================================================
+   Smooth Animated Details Drawer (Revealed Below the Image When Expanded)
+   Uses CSS Grid 0fr -> 1fr to guarantee zero clipping, zero overflow,
+   and zero unexplained gaps in the normal document flow.
+   ========================================================================== */
+
+.expandable-details-drawer {
+    display: grid;
+    grid-template-rows: 0fr;
+    width: 100%;
+    transition: grid-template-rows 700ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.expandable-details-drawer.is-expanded {
+    grid-template-rows: 1fr;
+}
+
+.expandable-details-inner {
+    overflow: hidden;
+    min-height: 0;
+}
+
+.expandable-details-body {
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    transition: opacity 350ms ease,
+        transform 450ms cubic-bezier(0.19, 1, 0.22, 1),
+        padding 700ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.expandable-details-drawer.is-expanded .expandable-details-body {
+    opacity: 1;
+    transform: translateY(0);
+    padding-top: 2.75rem;
+    padding-bottom: 0.75rem;
+    transition: opacity 500ms ease 180ms,
+        transform 650ms cubic-bezier(0.19, 1, 0.22, 1) 180ms,
+        padding 700ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Details Top Meta Row */
+.expandable-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(46, 46, 46, 0.08);
+    padding-bottom: 1.25rem;
+}
+
+.expandable-category-badge {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-brown, #8c5e3c);
+    background: rgba(140, 94, 60, 0.08);
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(140, 94, 60, 0.2);
+}
+
+.expandable-location-tag {
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: rgba(46, 46, 46, 0.65);
+    letter-spacing: 0.06em;
+}
+
+/* Expanded Title Heading */
+.expandable-details-title {
+    font-size: clamp(2rem, 3.4vw, 2.75rem);
+    font-weight: 300;
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+    color: var(--color-charcoal, #2e2e2e);
+    margin: 0;
+}
+
+/* Curatorial Quote */
+.expandable-details-quote {
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-style: italic;
+    font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+    line-height: 1.65;
+    color: var(--color-charcoal, #2e2e2e);
+    border-left: 2px solid var(--color-brown, #8c5e3c);
+    padding: 0.35rem 0 0.35rem 1.75rem;
+    margin: 0;
+}
+
+/* Authentic Project Description */
+.expandable-details-description {
+    font-size: clamp(1rem, 1.15vw, 1.12rem);
+    line-height: 1.8;
+    color: rgba(46, 46, 46, 0.82);
+    margin: 0;
+    max-width: 920px;
+}
+
+/* Specifications Grid (Area, Status, Material Palette) */
+.expandable-specs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem 2.5rem;
+    background: #fbf9f6;
+    border: 1px solid rgba(46, 46, 46, 0.09);
+    border-radius: 1px;
+    padding: 1.5rem 2rem;
+    margin-top: 0.25rem;
+}
+
+.expandable-spec-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.expandable-spec-item--wide {
+    grid-column: 1 / -1;
+}
+
+.expandable-spec-label {
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-brown, #8c5e3c);
+}
+
+.expandable-spec-value {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--color-charcoal, #2e2e2e);
+}
+
+/* Call to Action Button */
+.expandable-details-actions {
+    display: flex;
+    align-items: center;
+    padding-top: 0.5rem;
+}
+
+.expandable-details-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 2rem;
+    background: var(--color-brown, #8c5e3c);
+    color: #ffffff;
+    font-family: var(--font-sans, 'Inter', sans-serif);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border: 1px solid var(--color-brown, #8c5e3c);
+    border-radius: 1px;
+    transition: background-color 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.expandable-details-cta:hover {
+    background: transparent;
+    color: var(--color-brown, #8c5e3c);
+    transform: translateX(4px);
+}
+
+.expandable-cta-arrow {
+    display: inline-block;
+    transition: transform 0.25s ease;
+}
+
+.expandable-details-cta:hover .expandable-cta-arrow {
+    transform: translateX(4px);
+}
+
+/* ==========================================================================
+   Mobile Responsive Adjustments
+   ========================================================================== */
+@media (max-width: 768px) {
+    .expandable-compact-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+        padding-bottom: 0.85rem;
+    }
+
+    .expandable-compact-title {
+        white-space: normal;
+        word-break: break-word;
+        font-size: 1.25rem;
+    }
+
+    .expandable-compact-location {
+        font-size: 0.75rem;
+    }
+
+    .expandable-image-frame {
+        height: 230px;
+        /* Mobile compact requirement: 200–260px */
+    }
+
+    .expandable-image-frame.is-expanded {
+        height: 75vh;
+        /* Mobile expanded requirement: 75–85vh */
+    }
+
+    .expandable-fullscreen-btn {
+        top: 0.75rem;
+        right: 0.75rem;
+        font-size: 0.68rem;
+        padding: 0.35rem 0.75rem;
+    }
+
+    .expandable-badge {
+        bottom: 0.75rem;
+        right: 0.75rem;
+        font-size: 0.68rem;
+        padding: 0.35rem 0.75rem;
+    }
+
+    .expandable-details-drawer.is-expanded .expandable-details-body {
+        padding-top: 1.75rem;
+        gap: 1.35rem;
+    }
+
+    .expandable-specs-grid {
+        grid-template-columns: 1fr;
+        padding: 1.25rem;
+        gap: 1rem;
+    }
+
+    .expandable-details-quote {
+        padding-left: 1.25rem;
+    }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+
+    .expandable-image-frame,
+    .expandable-image-element,
+    .expandable-fullscreen-btn,
+    .expandable-badge,
+    .expandable-badge-icon,
+    .expandable-details-drawer,
+    .expandable-details-body,
+    .expandable-details-cta,
+    .expandable-cta-arrow {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        transition-delay: 0ms !important;
+    }
+}

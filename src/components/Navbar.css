@@ -1,0 +1,123 @@
+/* src/components/Navbar.css */
+
+/* Navbar container – white background, subtle border */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--color-off-white, #f7f5f2);
+  border-bottom: 1px solid rgba(140, 94, 60, 0.25);
+  box-shadow: 0 1px 12px rgba(0, 0, 0, 0.03);
+}
+
+/* Centered max-width container */
+.navbar__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem var(--space-md, 2rem);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* Brand Link: Logo image + Website Name */
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: var(--color-charcoal, #2e2e2e);
+  transition: opacity 0.2s ease;
+}
+
+.navbar__brand:hover {
+  opacity: 0.85;
+}
+
+.navbar__logo-img {
+  height: 44px;
+  width: auto;
+  max-width: 44px;
+  object-fit: contain;
+  display: block;
+  border-radius: 2px;
+}
+
+.navbar__brand-name {
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-charcoal, #2e2e2e);
+}
+
+/* Nav list */
+.navbar__list {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Links – uppercase, charcoal, hover effect */
+.navbar__link {
+  font-family: var(--font-sans);
+  font-size: 0.825rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--color-charcoal, #2e2e2e);
+  text-transform: uppercase;
+  padding: 0.4rem 0.2rem;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.navbar__link:hover,
+.navbar__link.active {
+  color: var(--color-brown, #8c5e3c);
+}
+
+.navbar__link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-brown, #8c5e3c);
+}
+
+/* Mobile: collapse cleanly */
+@media (max-width: 768px) {
+  .navbar__container {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.85rem 1.25rem;
+    gap: 0.75rem;
+  }
+
+  .navbar__logo-img {
+    height: 38px;
+    max-width: 38px;
+  }
+
+  .navbar__brand-name {
+    font-size: 1rem;
+  }
+
+  .navbar__nav {
+    width: 100%;
+  }
+
+  .navbar__list {
+    width: 100%;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 0.25rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+  }
+}

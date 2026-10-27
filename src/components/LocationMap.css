@@ -1,0 +1,6 @@
+/* src/components/LocationMap.css */
+.location-map {
+  width: 100%;
+  height: 300px;
+  margin: var(--space-lg) 0;
+}

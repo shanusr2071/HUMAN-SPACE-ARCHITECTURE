@@ -1,0 +1,15 @@
+/* src/pages/Studio.css */
+.studio-page {
+  padding: var(--space-lg) var(--space-md);
+  background: var(--color-off-white);
+}
+
+.studio-page .intro,
+.studio-page .image-showcase,
+.studio-page .team {
+  margin-bottom: var(--space-lg);
+}
+
+.studio-page .team h2 {
+  margin-bottom: var(--space-md);
+}

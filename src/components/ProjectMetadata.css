@@ -1,0 +1,20 @@
+/* src/components/ProjectMetadata.css */
+
+.project-metadata {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-xs) var(--space-sm);
+  margin: var(--space-md) 0;
+  font-size: var(--font-size-h3);
+  color: var(--color-charcoal);
+}
+
+.project-metadata dt {
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-brown);
+}
+
+.project-metadata dd {
+  margin: 0;
+}
